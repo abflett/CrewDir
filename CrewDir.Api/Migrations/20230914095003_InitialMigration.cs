@@ -182,7 +182,8 @@ namespace CrewDir.Api.Migrations
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
                     OfficeLocation = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ProfilePicture = table.Column<string>(type: "TEXT", nullable: false),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: false)
+                    CompanyEmail = table.Column<string>(type: "TEXT", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,8 +192,7 @@ namespace CrewDir.Api.Migrations
                         name: "FK_Employees_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Employees_Departments_DepartmentId",
                         column: x => x.DepartmentId,

@@ -21,7 +21,7 @@ namespace CrewDir.Api.Data.Repositories
             var storedManagerSecret = _configuration["ManagerSecret"];
             var foundUser = await _userManager.FindByNameAsync(name);
 
-            if (foundUser == null && storedManagerSecret != secret)
+            if (foundUser == null || storedManagerSecret != secret)
             {
                 return false;
             }

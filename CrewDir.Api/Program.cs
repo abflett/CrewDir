@@ -1,14 +1,12 @@
+using CrewDir.Api.Configuration;
 using CrewDir.Api.Data;
 using CrewDir.Api.Data.Identity;
 using CrewDir.Api.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -21,6 +19,7 @@ builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfi
 
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<DepartmentRepository>();
@@ -33,36 +32,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter your valid JWT token",
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-});
+builder.Services.AddSwaggerGen(options => options.AddSwaggerGenOptions());
 
 var app = builder.Build();
 
-app.MapGroup("/account").MapIdentityApi<AppUser>();
+app.MapIdentityApi<AppUser>().WithTags("Account");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

@@ -1,6 +1,8 @@
-﻿using CrewDir.Api.Data.Repositories;
+﻿using AutoMapper;
+using CrewDir.Api.Data.Repositories;
+using CrewDir.Api.DTOs.Requests;
+using CrewDir.Api.DTOs.Responses;
 using CrewDir.Api.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrewDir.Api.Controllers
@@ -10,18 +12,20 @@ namespace CrewDir.Api.Controllers
     public class DepartmentController : ControllerBase
     {
         private readonly DepartmentRepository _departmentRepository;
+        private readonly IMapper _mapper;
 
-        public DepartmentController(DepartmentRepository departmentRepository)
+        public DepartmentController(DepartmentRepository departmentRepository, IMapper mapper)
         {
             _departmentRepository = departmentRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Department>>> GetDepartments()
+        public async Task<IActionResult> GetDepartments()
         {
             try
             {
-                var departments = await _departmentRepository.Departments();
+                var departments = _mapper.Map<List<DepartmentResponse>>(await _departmentRepository.Departments());
                 return Ok(departments);
             }
             catch (Exception ex)
@@ -31,11 +35,11 @@ namespace CrewDir.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetDepartmentById(int id)
+        public async Task<IActionResult> GetDepartmentById(int id)
         {
             try
             {
-                var department = await _departmentRepository.DepartmentById(id);
+                var department = _mapper.Map<DepartmentResponse>(await _departmentRepository.DepartmentById(id));
                 return Ok(department);
             }
             catch (Exception ex)
@@ -45,11 +49,11 @@ namespace CrewDir.Api.Controllers
         }
 
         [HttpGet("Search")]
-        public async Task<ActionResult<Department>> SearchDepartment(string search)
+        public async Task<IActionResult> SearchDepartment(string search)
         {
             try
             {
-                var department = await _departmentRepository.SearchDepartments(search);
+                var department = _mapper.Map<List<DepartmentResponse>>(await _departmentRepository.SearchDepartments(search));
                 return Ok(department);
             }
             catch (Exception ex)
@@ -59,11 +63,11 @@ namespace CrewDir.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Department>> AddDepartment([FromBody] Department department)
+        public async Task<IActionResult> AddDepartment([FromBody] DepartmentRequest department)
         {
             try
             {
-                var addedDepartment = await _departmentRepository.AddDepartment(department);
+                var addedDepartment = await _departmentRepository.AddDepartment(_mapper.Map<Department>(department));
                 return CreatedAtAction(nameof(GetDepartmentById), new { id = addedDepartment.Id }, addedDepartment);
             }
             catch (Exception ex)
@@ -73,11 +77,11 @@ namespace CrewDir.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Department>> UpdateDepartment([FromBody] Department department)
+        public async Task<IActionResult> UpdateDepartment([FromBody] DepartmentRequest department)
         {
             try
             {
-                var updatedDepartment = await _departmentRepository.UpdateDepartment(department);
+                var updatedDepartment = _mapper.Map<DepartmentResponse>(await _departmentRepository.UpdateDepartment(_mapper.Map<Department>(department)));
                 return Ok(updatedDepartment);
             }
             catch (Exception ex)

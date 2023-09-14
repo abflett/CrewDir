@@ -1,10 +1,8 @@
-﻿using CrewDir.Api.Data.Identity;
-using CrewDir.Api.Helpers;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CrewDir.Api.Models
+namespace CrewDir.Api.DTOs.Requests
 {
-    public class Employee
+    public class EmployeeRequest
     {
         public int Id { get; set; }
 
@@ -22,16 +20,11 @@ namespace CrewDir.Api.Models
 
         [Required]
         public int DepartmentId { get; set; }
-        public Department? Department { get; set; }
 
-        private string _phone = string.Empty;
         [Required]
         [Phone]
-        public string Phone
-        {
-            get { return PhoneNumber.FormatPhoneNumberForDisplay(_phone); }
-            set { _phone = PhoneNumber.FormatPhoneNumberForStorage(value); }
-        }
+        public string Phone { get; set; } = string.Empty;
+
         [Required]
         [StringLength(50, MinimumLength = 2)]
         public string OfficeLocation { get; set; } = string.Empty;
@@ -42,8 +35,5 @@ namespace CrewDir.Api.Models
         [Required]
         [EmailAddress]
         public string CompanyEmail { get; set; } = string.Empty;
-
-        public string? AppUserId { get; set; }
-        public AppUser? AppUser { get; set; }
     }
 }

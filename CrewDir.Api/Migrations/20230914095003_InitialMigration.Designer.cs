@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrewDir.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914072110_InitialMigration")]
+    [Migration("20230914095003_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -107,6 +107,9 @@ namespace CrewDir.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CompanyEmail")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -283,9 +286,7 @@ namespace CrewDir.Api.Migrations
                 {
                     b.HasOne("CrewDir.Api.Data.Identity.AppUser", "AppUser")
                         .WithOne("Employee")
-                        .HasForeignKey("CrewDir.Api.Models.Employee", "AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CrewDir.Api.Models.Employee", "AppUserId");
 
                     b.HasOne("CrewDir.Api.Models.Department", "Department")
                         .WithMany("Employees")

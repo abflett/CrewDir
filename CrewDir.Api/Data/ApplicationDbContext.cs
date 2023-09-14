@@ -22,7 +22,8 @@ namespace CrewDir.Api.Data
             modelBuilder.Entity<AppUser>()
                 .HasOne(e => e.Employee)
                 .WithOne(e => e.AppUser)
-                .HasForeignKey<Employee>(fk => fk.AppUserId);
+                .HasForeignKey<Employee>(fk => fk.AppUserId)
+                .IsRequired(false);
         }
     }
 }

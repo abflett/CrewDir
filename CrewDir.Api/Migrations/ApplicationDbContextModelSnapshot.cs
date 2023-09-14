@@ -104,6 +104,9 @@ namespace CrewDir.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CompanyEmail")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -280,9 +283,7 @@ namespace CrewDir.Api.Migrations
                 {
                     b.HasOne("CrewDir.Api.Data.Identity.AppUser", "AppUser")
                         .WithOne("Employee")
-                        .HasForeignKey("CrewDir.Api.Models.Employee", "AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CrewDir.Api.Models.Employee", "AppUserId");
 
                     b.HasOne("CrewDir.Api.Models.Department", "Department")
                         .WithMany("Employees")
