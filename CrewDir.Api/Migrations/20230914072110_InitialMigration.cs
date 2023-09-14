@@ -181,11 +181,18 @@ namespace CrewDir.Api.Migrations
                     DepartmentId = table.Column<int>(type: "INTEGER", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
                     OfficeLocation = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    ProfilePicture = table.Column<string>(type: "TEXT", nullable: false)
+                    ProfilePicture = table.Column<string>(type: "TEXT", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Employees_Departments_DepartmentId",
                         column: x => x.DepartmentId,
@@ -229,6 +236,12 @@ namespace CrewDir.Api.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_AppUserId",
+                table: "Employees",
+                column: "AppUserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

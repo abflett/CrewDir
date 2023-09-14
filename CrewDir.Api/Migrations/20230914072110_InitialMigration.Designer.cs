@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrewDir.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230913093622_Migration002")]
-    partial class Migration002
+    [Migration("20230914072110_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

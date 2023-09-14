@@ -2,7 +2,6 @@
 using CrewDir.Api.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
 
 namespace CrewDir.Api.Data
 {
@@ -22,7 +21,7 @@ namespace CrewDir.Api.Data
 
             modelBuilder.Entity<AppUser>()
                 .HasOne(e => e.Employee)
-                .WithOne()
+                .WithOne(e => e.AppUser)
                 .HasForeignKey<Employee>(fk => fk.AppUserId);
         }
     }

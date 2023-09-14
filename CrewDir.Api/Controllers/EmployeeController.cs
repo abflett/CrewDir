@@ -1,11 +1,7 @@
-﻿using CrewDir.Api.Data;
-using CrewDir.Api.Data.Identity;
-using CrewDir.Api.Data.Repositories;
+﻿using CrewDir.Api.Data.Repositories;
 using CrewDir.Api.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CrewDir.Api.Controllers
 {
@@ -20,6 +16,7 @@ namespace CrewDir.Api.Controllers
             _employeeRepository = employeeRepository;
         }
 
+        [Authorize(Roles = "Management")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {

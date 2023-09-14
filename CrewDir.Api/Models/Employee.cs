@@ -22,12 +22,13 @@ namespace CrewDir.Api.Models
 
         [Required]
         public int DepartmentId { get; set; }
-        //public Department Department { get; set; } = new();
+        public Department? Department { get; set; }
 
         private string _phone = string.Empty;
         [Required]
         [Phone]
-        public string Phone {
+        public string Phone
+        {
             get { return PhoneNumber.FormatPhoneNumberForDisplay(_phone); }
             set { _phone = PhoneNumber.FormatPhoneNumberForStorage(value); }
         }
@@ -40,6 +41,6 @@ namespace CrewDir.Api.Models
 
         [Required]
         public string AppUserId { get; set; } = string.Empty;
-        //public AppUser? AppUser { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

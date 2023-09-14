@@ -19,9 +19,12 @@ namespace CrewDir.Api.Data.Repositories
 
         public async Task<Department> DepartmentById(int id)
         {
-            var department = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            var department = await _dbContext.Departments.Include(d => d.Employees!).FirstOrDefaultAsync(x => x.Id == id);
 
-            if (department != null) {
+            var users = await _dbContext.Users.ToListAsync();
+
+            if (department != null)
+            {
                 return department;
             }
 
