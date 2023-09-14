@@ -1,6 +1,4 @@
-﻿using CrewDir.Api.Data.Identity;
-using CrewDir.Api.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using CrewDir.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrewDir.Api.Data.Repositories
@@ -8,17 +6,10 @@ namespace CrewDir.Api.Data.Repositories
     public class EmployeeRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<AppUser> _userManager;
 
-        public EmployeeRepository(ApplicationDbContext dbContext, UserManager<AppUser> userManager)
+        public EmployeeRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userManager = userManager;
-        }
-
-        public async Task<List<AppUser>> Users()
-        {
-            return await _userManager.Users.Include(x => x.Employee).ToListAsync();
         }
 
         public async Task<List<Employee>> Employees()

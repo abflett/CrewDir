@@ -33,7 +33,7 @@ namespace CrewDir.Api.Data.Repositories
 
         public async Task<List<Department>> SearchDepartments(string searchString)
         {
-            return await _dbContext.Departments.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper())).ToListAsync();
+            return await _dbContext.Departments.Where(x => x.Name.ToUpper().Contains(searchString.ToUpper())).Include(x => x.Employees).ToListAsync();
         }
 
         public async Task<Department> AddDepartment(Department department)

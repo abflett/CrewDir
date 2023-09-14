@@ -36,7 +36,7 @@ namespace CrewDir.Api.Configuration
                 var tag = e.ActionDescriptor.EndpointMetadata.OfType<TagsAttribute>().FirstOrDefault()?.Tags[0];
                 if (tag == "Account")
                 {
-                    var path = char.ToUpper(e.RelativePath![0]) + e.RelativePath!.ToLower()[1..]
+                    var path = char.ToUpper(e.RelativePath![0]) + e.RelativePath![1..]
                     .Replace("/", "")
                     .Replace("{", "By")
                     .Replace("}", "");

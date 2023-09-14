@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrewDir.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914095003_InitialMigration")]
+    [Migration("20230914133030_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

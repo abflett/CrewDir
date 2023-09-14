@@ -21,6 +21,7 @@ namespace CrewDir.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<DepartmentResponse>))]
         public async Task<IActionResult> GetDepartments()
         {
             try
@@ -34,7 +35,9 @@ namespace CrewDir.Api.Controllers
             }
         }
 
+        //[Authorize]
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(DepartmentResponse))]
         public async Task<IActionResult> GetDepartmentById(int id)
         {
             try
@@ -48,7 +51,8 @@ namespace CrewDir.Api.Controllers
             }
         }
 
-        [HttpGet("Search")]
+        [HttpGet("search")]
+        [ProducesResponseType(200, Type = typeof(List<DepartmentResponse>))]
         public async Task<IActionResult> SearchDepartment(string search)
         {
             try
@@ -62,12 +66,14 @@ namespace CrewDir.Api.Controllers
             }
         }
 
+        //[Authorize]
         [HttpPost]
+        [ProducesResponseType(200, Type = typeof(DepartmentResponse))]
         public async Task<IActionResult> AddDepartment([FromBody] DepartmentRequest department)
         {
             try
             {
-                var addedDepartment = await _departmentRepository.AddDepartment(_mapper.Map<Department>(department));
+                var addedDepartment = _mapper.Map<DepartmentResponse>(await _departmentRepository.AddDepartment(_mapper.Map<Department>(department)));
                 return CreatedAtAction(nameof(GetDepartmentById), new { id = addedDepartment.Id }, addedDepartment);
             }
             catch (Exception ex)
@@ -76,7 +82,9 @@ namespace CrewDir.Api.Controllers
             }
         }
 
+        //[Authorize(Roles = "Management")]
         [HttpPut]
+        [ProducesResponseType(200, Type = typeof(DepartmentResponse))]
         public async Task<IActionResult> UpdateDepartment([FromBody] DepartmentRequest department)
         {
             try
@@ -90,7 +98,9 @@ namespace CrewDir.Api.Controllers
             }
         }
 
+        //[Authorize(Roles = "Management")]
         [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(bool))]
         public async Task<IActionResult> RemoveDepartment(int id)
         {
             try

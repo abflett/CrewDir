@@ -6,7 +6,7 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string JobTitle { get; set; } = string.Empty;
-        public DepartmentResponse? Department { get; set; }
+        public int DepartmentId { get; set; }
         public string Phone { get; set; } = string.Empty;
         public string OfficeLocation { get; set; } = string.Empty;
         public string ProfilePicture { get; set; } = "default.png";

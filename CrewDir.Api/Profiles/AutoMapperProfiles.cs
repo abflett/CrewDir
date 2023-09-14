@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CrewDir.Api.Data.Identity;
 using CrewDir.Api.DTOs.Requests;
 using CrewDir.Api.DTOs.Responses;
 using CrewDir.Api.Models;
@@ -14,6 +15,8 @@ namespace CrewDir.Api.Profiles
 
             CreateMap<Employee, EmployeeResponse>();
             CreateMap<EmployeeRequest, Employee>();
+
+            CreateMap<AppUser, AppUserResponse>();
         }
     }
 }
