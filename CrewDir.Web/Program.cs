@@ -1,5 +1,5 @@
 ﻿using CrewDir.UIService;
-using CrewDir.Web;
+using CrewDir.UIShared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
