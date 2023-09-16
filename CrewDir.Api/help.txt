@@ -1,0 +1,7 @@
+﻿
+
+// run with debuging
+dotnet watch run --launch-profile https
+
+// run using runtime in release
+dotnet run --launch-profile https
