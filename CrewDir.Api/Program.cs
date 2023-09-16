@@ -21,6 +21,16 @@ builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerSche
 builder.Services.AddAuthorizationBuilder();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<DepartmentRepository>();
 builder.Services.AddScoped<ManagementRepository>();
@@ -40,6 +50,7 @@ app.MapIdentityApi<AppUser>().WithTags("Account");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
+app.UseCors("AllowAnyOrigin"); // Apply the CORS policy here
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
